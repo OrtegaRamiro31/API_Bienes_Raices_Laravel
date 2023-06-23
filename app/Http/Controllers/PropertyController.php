@@ -12,7 +12,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        //
+        $properties = Property::all();
+        return response()->json($properties);
     }
 
     /**
