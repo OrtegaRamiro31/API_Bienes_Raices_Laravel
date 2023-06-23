@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->double('price');
             $table->text('description');
+            $table->integer('wc')->default(0);
+            $table->integer('parking')->default(0);
+            $table->integer('rooms')->default(0);
             $table->timestamps();
         });
     }
