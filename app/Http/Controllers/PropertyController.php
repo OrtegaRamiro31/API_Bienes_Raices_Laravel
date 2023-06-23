@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PropertyCollection;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PropertyController extends Controller
 {
@@ -12,8 +14,11 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::all();
-        return response()->json($properties);
+        // $properties = Property::all();
+        // $properties = Property::orderBy('id', 'DESC')->paginate(5);
+        // return response()->json($properties);
+        // Get all registers order by id. Pagitation 5
+        return new PropertyCollection(Property::orderBy('id', 'DESC')->paginate(5));
     }
 
     /**
