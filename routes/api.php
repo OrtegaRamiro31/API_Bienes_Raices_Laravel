@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/properties', PropertyController::class);
-// Route::get('/properties', [PropertyController::class, 'index']);
+// Route::put('/properties', [PropertyController::class, 'index']);
