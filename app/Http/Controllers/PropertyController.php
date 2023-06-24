@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PropertyCreateRequest;
+use App\Http\Requests\PropertyUpdateRequest;
 use App\Http\Resources\PropertyCollection;
 use App\Http\Resources\PropertyResource;
 use App\Models\Property;
@@ -51,15 +52,12 @@ class PropertyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Property $property)
+    public function update(PropertyUpdateRequest $request, Property $property)
     {
-        $property->title = $request->input('title', $property->title);
-        $property->price = $request->input('price', $property->price);
-        $property->description = $request->input('description', $property->description);
-        $property->wc = $request->input('wc', $property->wc);
-        $property->parking = $request->input('parking', $property->parking);
-        $property->rooms = $request->input('rooms', $property->rooms);
+        // Validation
+        $data = $request->validated();
 
+        $property->fill($data);
         $property->save();
 
         return new PropertyResource($property);
