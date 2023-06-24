@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PropertyRequest;
+use App\Http\Requests\PropertyCreateRequest;
 use App\Http\Resources\PropertyCollection;
 use App\Http\Resources\PropertyResource;
 use App\Models\Property;
@@ -22,17 +22,20 @@ class PropertyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PropertyRequest $request)
+    public function store(PropertyCreateRequest $request)
     {
-        $property = new Property;
-        $property->title = $request->title;
-        $property->price = $request->price;
-        $property->description = $request->description;
-        $property->wc = $request->wc;
-        $property->parking = $request->parking;
-        $property->rooms = $request->rooms;
+        $data = $request->validated();
+        
+        $property = Property::create([
+            'title'       => $data['title'],
+            'price'       => $data['price'],
+            'description' => $data['description'],
+            'wc'          => $data['wc'],
+            'parking'     => $data['parking'],
+            'rooms'       => $data['rooms'],
+        ]);
 
-        $property->save();
+
         return response()->json($property);
     }
 
