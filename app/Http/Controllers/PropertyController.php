@@ -16,10 +16,6 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        // $properties = Property::all();
-        // $properties = Property::orderBy('id', 'DESC')->paginate(5);
-        // return response()->json($properties);
-        // Get all registers order by id. Pagitation 5
         return new PropertyCollection(Property::orderBy('id', 'DESC')->paginate(5));
     }
 
@@ -54,7 +50,6 @@ class PropertyController extends Controller
      */
     public function update(Request $request, Property $property)
     {
-        // Resto del código para actualizar la propiedad
         $property->title = $request->input('title', $property->title);
         $property->price = $request->input('price', $property->price);
         $property->description = $request->input('description', $property->description);
@@ -65,13 +60,20 @@ class PropertyController extends Controller
         $property->save();
 
         return new PropertyResource($property);
-
     }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Property $property)
     {
-        //
+        if ($property->delete()) {
+            return response()->json([
+                'msg' => 'Propiedad eliminada correctamente',
+            ]);
+        } else {
+            return response()->json([
+                'msg' => 'No se pudo eliminar la propiedad',
+            ], 500);
+        }
     }
 }
