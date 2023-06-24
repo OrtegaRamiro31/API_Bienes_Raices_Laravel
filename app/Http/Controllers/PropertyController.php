@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PropertyRequest;
 use App\Http\Resources\PropertyCollection;
 use App\Http\Resources\PropertyResource;
 use App\Models\Property;
@@ -25,7 +26,7 @@ class PropertyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PropertyRequest $request)
     {
         $property = new Property;
         $property->title = $request->title;
@@ -64,7 +65,7 @@ class PropertyController extends Controller
         $property->save();
 
         return new PropertyResource($property);
-    
+
     }
     /**
      * Remove the specified resource from storage.
