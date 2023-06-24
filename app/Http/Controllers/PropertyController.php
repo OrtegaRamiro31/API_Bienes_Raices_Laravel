@@ -26,16 +26,8 @@ class PropertyController extends Controller
     public function store(PropertyCreateRequest $request)
     {
         $data = $request->validated();
-        
-        $property = Property::create([
-            'title'       => $data['title'],
-            'price'       => $data['price'],
-            'description' => $data['description'],
-            'wc'          => $data['wc'],
-            'parking'     => $data['parking'],
-            'rooms'       => $data['rooms'],
-        ]);
-
+    
+        $property = Property::create($data);
 
         return response()->json($property);
     }
