@@ -23,10 +23,10 @@ class PropertyRequest extends FormRequest
     {
         return [
             'title'       => 'required|min:5',
-            'price'       => 'required|min:6|numeric',
+            'price'       => 'required|min:10000|numeric',
             'description' => 'required|min:20',
             'wc'          => 'required|min:1|numeric',
-            'parking'     => 'required|min:1|numeric',
+            'parking'     => 'required|min:0|numeric',
             'rooms'       => 'required|min:1|numeric',
         ];
     }
