@@ -17,4 +17,8 @@ class Property extends Model
         'parking',
         'rooms',
     ];
+
+    public function images() {
+        return $this->hasMany(Image::class, 'property_id');
+    }
 }

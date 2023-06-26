@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Property;
+use App\Http\Resources\PropertyResource;
+use App\Http\Resources\PropertyCollection;
 use App\Http\Requests\PropertyCreateRequest;
 use App\Http\Requests\PropertyUpdateRequest;
-use App\Http\Resources\PropertyCollection;
-use App\Http\Resources\PropertyResource;
-use App\Models\Property;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PropertyController extends Controller
 {
@@ -17,6 +15,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
+        // return new PropertyCollection(Property::with('user')->orderBy('id', 'DESC')->paginate(5));
         return new PropertyCollection(Property::orderBy('id', 'DESC')->paginate(5));
     }
 
@@ -26,9 +25,26 @@ class PropertyController extends Controller
     public function store(PropertyCreateRequest $request)
     {
         $data = $request->validated();
-    
+        
+        // Add new property
         $property = Property::create($data);
+    
+        // Save imagees
+        if ($request->hasFile('images')) {
 
+            $imageFiles = $request->file('images');
+
+            foreach ($imageFiles as $image) {
+                $imagePath = $image->store('images', 'public');
+
+                // Create image associate with property
+                $property->images()->create([
+                    'image' => $imagePath
+                ]);
+            }
+        }
+    
+        // $property->load('images');
         return response()->json($property);
     }
 
