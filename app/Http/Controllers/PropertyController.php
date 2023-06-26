@@ -16,7 +16,7 @@ class PropertyController extends Controller
     public function index()
     {
         // return new PropertyCollection(Property::with('user')->orderBy('id', 'DESC')->paginate(5));
-        return new PropertyCollection(Property::orderBy('id', 'DESC')->paginate(5));
+        return new PropertyCollection(Property::with('images')->orderBy('id', 'DESC')->paginate(5));
     }
 
     /**
@@ -54,6 +54,7 @@ class PropertyController extends Controller
     public function show(Property $property)
     {
     //    return Property::find($property->id);
+        $property->load('images');
         return new PropertyResource($property);
     }
 
