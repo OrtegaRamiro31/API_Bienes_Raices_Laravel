@@ -28,6 +28,8 @@ class PropertyCreateRequest extends FormRequest
             'wc'          => 'required|min:1|numeric',
             'parking'     => 'required|min:0|numeric',
             'rooms'       => 'required|min:1|numeric',
+            'images'      => 'required|array',
+            'images.*'    => 'image|mimes:png,jpg,jpeg|max:2048',
         ];
     }
 }

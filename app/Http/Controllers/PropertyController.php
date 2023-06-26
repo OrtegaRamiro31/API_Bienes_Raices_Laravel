@@ -36,10 +36,10 @@ class PropertyController extends Controller
 
             foreach ($imageFiles as $image) {
                 $imagePath = $image->store('images', 'public');
-
+                $imageName = str_replace('images/', '', $imagePath);
                 // Create image associate with property
                 $property->images()->create([
-                    'image' => $imagePath
+                    'image' => $imageName
                 ]);
             }
         }
