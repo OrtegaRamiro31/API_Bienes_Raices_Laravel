@@ -7,6 +7,7 @@ use App\Http\Resources\PropertyResource;
 use App\Http\Resources\PropertyCollection;
 use App\Http\Requests\PropertyCreateRequest;
 use App\Http\Requests\PropertyUpdateRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PropertyController extends Controller
 {
@@ -76,7 +77,14 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
+        $images = $property->images;
+
         if ($property->delete()) {
+            foreach($images as $image) {
+                if( Storage::disk('public')->exists('images/' . $image->image) ) {
+                    Storage::disk('public')->delete( 'images/' . $image->image );
+                }
+            }
             return response()->json([
                 'msg' => 'Propiedad eliminada correctamente',
             ]);
