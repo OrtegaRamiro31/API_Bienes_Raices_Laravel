@@ -81,17 +81,17 @@ class PropertyController extends Controller
 
         if ($property->delete()) {
             foreach($images as $image) {
-                if( Storage::disk('public')->exists('images/' . $image->image) ) {
+                if( Storage::disk('public')->exists( 'images/' . $image->image ) ) {
                     Storage::disk('public')->delete( 'images/' . $image->image );
                 }
             }
             return response()->json([
                 'msg' => 'Propiedad eliminada correctamente',
             ]);
-        } else {
-            return response()->json([
-                'msg' => 'No se pudo eliminar la propiedad',
-            ], 500);
-        }
+        } 
+        return response()->json([
+            'msg' => 'No se pudo eliminar la propiedad',
+        ], 500);
+        
     }
 }
