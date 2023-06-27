@@ -12,11 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('properties', function (Blueprint $table) {
-            $table->string('postal_code');
             $table->string('latitude');
             $table->string('longitude');
-            $table->string('street_address');
-            $table->string('street_address_2');
         });
     }
 
