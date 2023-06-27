@@ -17,6 +17,8 @@ class Property extends Model
         'parking',
         'rooms',
         'user_id',
+        'latitude',
+        'longitude',
     ];
 
     public function images() {
