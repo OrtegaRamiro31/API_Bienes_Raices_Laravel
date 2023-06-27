@@ -55,8 +55,9 @@ class PropertyController extends Controller
     public function show(Property $property)
     {
     //    return Property::find($property->id);
-        $property->load('images');
-        return new PropertyResource($property);
+        // $property->load('images');
+        // $property->load('user');
+        return response()->json( new PropertyResource($property) );
     }
 
     /**
