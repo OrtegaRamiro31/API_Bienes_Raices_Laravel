@@ -16,9 +16,14 @@ class Property extends Model
         'wc',
         'parking',
         'rooms',
+        'user_id',
     ];
 
     public function images() {
         return $this->hasMany(Image::class, 'property_id');
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

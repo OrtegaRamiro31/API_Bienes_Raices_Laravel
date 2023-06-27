@@ -7,6 +7,7 @@ use App\Http\Resources\PropertyResource;
 use App\Http\Resources\PropertyCollection;
 use App\Http\Requests\PropertyCreateRequest;
 use App\Http\Requests\PropertyUpdateRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PropertyController extends Controller
@@ -17,7 +18,7 @@ class PropertyController extends Controller
     public function index()
     {
         // return new PropertyCollection(Property::with('user')->orderBy('id', 'DESC')->paginate(5));
-        return new PropertyCollection(Property::with('images')->orderBy('id', 'DESC')->paginate(5));
+        return new PropertyCollection(Property::with(['user','images'])->orderBy('id', 'DESC')->paginate(5));
     }
 
     /**
@@ -26,10 +27,9 @@ class PropertyController extends Controller
     public function store(PropertyCreateRequest $request)
     {
         $data = $request->validated();
-        
+        $data['user_id'] = Auth::user()->id;
         // Add new property
         $property = Property::create($data);
-    
         // Save imagees
         if ($request->hasFile('images')) {
 
